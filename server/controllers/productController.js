@@ -124,71 +124,68 @@ const deleteProduct = async (req, res) => {
 }
 
 const getProducts = async (req, res) => {
+  try {
+    let { page, limit, category, price, search } = req.query;
+    page = parseInt(page) || 1;
+    limit = parseInt(limit) || 9;
 
-    try {
+    const query = {};
 
-        let { page, limit, category, price, search } = req.query
-        page = parseInt(page) || 1
-        limit = parseInt(limit) || 9
-
-        let query = {}
-
-        if (category) {
-            query.category = category.charAt(0).toUpperCase() + category.slice(1)
-        }
-
-        if (category === "all") delete query.category
-
-        if (search) query.name = { $regex: search, $options: "i" }
-
-
-        if (price > 0) query.price = { $lte: price }
-    
-
-        const totalProducts = await Product.countDocuments(query)
-        const totalPages = Math.ceil(totalProducts / limit)
-
-
-        const products = await Product.find(query)
-            .select("name price images rating description blacklisted")
-            .skip((page - 1) * limit)
-            .limit(limit)
-
-            let newProductsArray = []
-
-products.forEach((product) => {
-    const productObj = product.toObject()
-    productObj.image = productObj.images[0]
-    delete productObj.images
-    newProductsArray.push(productObj) // <-- important!
-})
-
-        if (!products.length) {
-            return res.status(404).json({
-                success: false,
-                message: "No products found"
-            })
-        }
-
-        return res.status(200).json({
-            success: true,
-            message: "Products fetched!",
-            data: newProductsArray,
-            pagination: {
-                totalProducts,
-                totalPages,
-                currentPage: page,
-                pageSize: limit
-            }
-        })
-
-    } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: error.message
-        })
+    // Filter: Category
+    if (category && category !== "all" && category.trim() !== "") {
+      query.category = category.charAt(0).toUpperCase() + category.slice(1);
     }
-}
+
+    // Filter: Search
+    if (search && search.trim() !== "") {
+      query.name = { $regex: search, $options: "i" };
+    }
+
+    // Filter: Price
+    if (price && parseInt(price) > 0) {
+      query.price = { $lte: parseInt(price) };
+    }
+
+    const totalProducts = await Product.countDocuments(query);
+    const totalPages = Math.ceil(totalProducts / limit);
+
+    const products = await Product.find(query)
+      .select("name price images rating description blacklisted")
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    const newProductsArray = products.map((product) => {
+      const productObj = product.toObject();
+      productObj.image = productObj.images[0]; // extract first image
+      delete productObj.images;
+      return productObj;
+    });
+
+    if (!products.length) {
+      return res.status(404).json({
+        success: false,
+        message: "No products found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Products fetched!",
+      data: newProductsArray,
+      pagination: {
+        totalProducts,
+        totalPages,
+        currentPage: page,
+        pageSize: limit,
+      },
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 
 // const getProductByName = async (req, res) => {
 //     const { name } = req.params
