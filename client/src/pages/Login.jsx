@@ -77,6 +77,23 @@ export const Login = () => {
       </Link>
     </div>
     </form>
+    <div className='flex items-center gap-2'>
+      
+    <label
+        htmlFor="terms"
+        className="text-xs  leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+      >
+        Only for admins!
+      </label>
+    <Link to={"/admin/login"}>
+      <label
+        htmlFor="terms"
+        className="text-sm  leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+      >
+        <strong> Admin Login</strong>
+      </label>
+      </Link>
+    </div>
   </div>
   )
 }
