@@ -29,30 +29,15 @@ export const FilterMenu = () => {
 
   useEffect(() => {
     const getFilterProducts = async () => {
-      try {
-        const queryParams = [];
-  
-        if (category) queryParams.push(`category=${category}`);
-        if (price) queryParams.push(`price=${price}`);
-        if (search) queryParams.push(`search=${search}`);
-  
-        const queryString = queryParams.length
-          ? `?${queryParams.join("&")}`
-          : "";
-  
-        const res = await axios.get(
-          `${import.meta.env.VITE_API_URL}/get-products${queryString}`
-        );
-  
-        const data = res.data;
-        dispatch(setProducts(data.data));
-      } catch (err) {
-        console.error("Error fetching filtered products:", err);
-      }
+      const res = await axios.get(
+        import.meta.env.VITE_API_URL +
+          `/get-products?category=${category}&price=${price}&search=${search}`
+      );
+      const data = await res.data;
+      dispatch(setProducts(data.data))
     };
-  
-    getFilterProducts();
-  }, [category, price, search]);
+    getFilterProducts()
+  }, [ category,price,search]);
 
   return (
     <div className="w-[93vw] flex flex-col sm:flex-row justify-between items-center mx-auto my-10 gap-3 sm:gap-0">
