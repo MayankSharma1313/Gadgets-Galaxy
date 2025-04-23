@@ -2,7 +2,7 @@
 
 **Gadget Galaxy** is a modern and responsive full-stack e-commerce platform built for discovering and purchasing cutting-edge tech gadgets. Crafted with performance, great UX, and scalability in mind – ideal for both users and admins.
 
-![Gadget Galaxy Banner](https://your-image-url.com/banner.png)
+![Gadget Galaxy Banner](client/images/GG_Banner.png)
 
 ---
 
