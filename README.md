@@ -8,8 +8,7 @@
 
 ## 🌟 Demo
 
-**Live Site:** [[https://gadgetgalaxy.com](https://gadgets-galaxy.vercel.app/)]([https://gadgetgalaxy.com](https://gadgets-galaxy.vercel.app/))  
-**Admin Panel:** [[https://gadgetgalaxy.com](https://gadgets-galaxy.vercel.app/)/admin]([https://gadgetgalaxy.com](https://gadgets-galaxy.vercel.app/)/admin)  
+**Live Site:** [https://gadgetgalaxy.com](https://gadgets-galaxy.vercel.app/)
 > 🧪 Test credentials available in the demo section or request via email.
 
 ---
