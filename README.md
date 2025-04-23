@@ -52,5 +52,8 @@
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/gadget-galaxy.git
-cd gadget-galaxy
+[git clone https://github.com/your-username/gadget-galaxy.git](https://github.com/MayankSharma1313/Gadgets-Galaxy.git)
+cd client
+npm run dev
+cd server
+node index.js
